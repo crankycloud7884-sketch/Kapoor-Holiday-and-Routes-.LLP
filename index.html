@@ -1634,10 +1634,10 @@ help you plan your journey.
 id="bookingForm"
 action="https://formsubmit.co/pankajkapoor@kapoorroutesholiday.com"
 method="POST">
-<input type="hidden" name="_subject" value="New Travel Enquiry - kapoorroutesholiday">
-<input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_template" value="table">
 
+<input type="hidden" name="_subject" value="New Travel Enquiry - kapoorroutesholiday">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_captcha" value="false">
 
 <div class="booking-grid">
 
@@ -1683,7 +1683,7 @@ required>
 Destination *
 </label>
 
-<select id="destinationSelect" name="Destination" required>
+<select id="destinationSelect" name="destination" required>
 
 <option value="">
 Select destination
@@ -1719,7 +1719,7 @@ type="date">
 Travellers
 </label>
 
-<select id="travellers" name="Travellers">
+<select id="travellers" name="travellers">
 
 <option>1</option>
 <option>2</option>
@@ -2194,7 +2194,7 @@ document
    EMAIL FUNCTION
 ========================================================= */
 
-function openEmail(subject, message){
+function openEmail(subject,message){
 
     const form = document.createElement("form");
 
@@ -2203,14 +2203,16 @@ function openEmail(subject, message){
         "https://formsubmit.co/" + BUSINESS_EMAIL;
     form.target = "_blank";
 
+    const customerEmail =
+        document.getElementById("email")
+        ? document.getElementById("email").value.trim()
+        : "";
+
     const fields = {
         "_subject": subject,
-        "_captcha": "false",
         "_template": "table",
-        "_replyto":
-            document.getElementById("email")
-            ? document.getElementById("email").value.trim()
-            : "",
+        "_captcha": "false",
+        "_replyto": customerEmail,
         "message": message
     };
 
@@ -2227,9 +2229,7 @@ function openEmail(subject, message){
     });
 
     document.body.appendChild(form);
-
     form.submit();
-
     form.remove();
 
 }
@@ -2560,25 +2560,7 @@ document
    BOOKING FORM
 ========================================================= */
 
-document
-.getElementById("bookingForm")
-.addEventListener("submit",function(event){
-
-    const form = event.currentTarget;
-
-    if(!form.checkValidity()){
-
-        event.preventDefault();
-        form.reportValidity();
-        return;
-
-    }
-
-    showToast(
-        "Sending your travel enquiry..."
-    );
-
-}););
+// Booking form uses normal HTML POST to FormSubmit.);
 
 
 /* =========================================================
