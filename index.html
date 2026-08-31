@@ -1630,7 +1630,14 @@ help you plan your journey.
 
 <div class="booking-container">
 
-<form id="bookingForm">
+<form
+id="bookingForm"
+action="https://formsubmit.co/pankajkapoor@kapoorroutesholiday.com"
+method="POST">
+<input type="hidden" name="_subject" value="New Travel Enquiry - kapoorroutesholiday">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_template" value="table">
+
 
 <div class="booking-grid">
 
@@ -1640,7 +1647,6 @@ help you plan your journey.
 
 <input
 id="name"
-name="name"
 type="text"
 placeholder="Your name"
 required>
@@ -1653,7 +1659,6 @@ required>
 
 <input
 id="email"
-name="email"
 type="email"
 placeholder="pankajkapoor@kapoorroutesholiday.com"
 required>
@@ -1666,7 +1671,6 @@ required>
 
 <input
 id="phone"
-name="phone"
 type="tel"
 placeholder="9971119592"
 required>
@@ -1679,7 +1683,7 @@ required>
 Destination *
 </label>
 
-<select id="destinationSelect" required>
+<select id="destinationSelect" name="Destination" required>
 
 <option value="">
 Select destination
@@ -1705,7 +1709,6 @@ Travel Date
 
 <input
 id="travelDate"
-name="travelDate"
 type="date">
 
 </div>
@@ -1716,7 +1719,7 @@ type="date">
 Travellers
 </label>
 
-<select id="travellers">
+<select id="travellers" name="Travellers">
 
 <option>1</option>
 <option>2</option>
@@ -1737,7 +1740,6 @@ Tell us about your trip
 
 <textarea
 id="message"
-name="message"
 placeholder="Tell us your preferred destination, dates, budget or special requirements..."></textarea>
 
 </div>
@@ -2192,60 +2194,43 @@ document
    EMAIL FUNCTION
 ========================================================= */
 
-function openEmail(subject,message){
+function openEmail(subject, message){
 
-    const customerEmail =
-        document.getElementById("email")
-        ? document.getElementById("email").value.trim()
-        : "";
+    const form = document.createElement("form");
 
-    fetch(
-        "https://formsubmit.co/ajax/" + BUSINESS_EMAIL,
-        {
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json",
-                "Accept":"application/json"
-            },
-            body:JSON.stringify({
-                name:"Website Travel Enquiry",
-                email:customerEmail,
-                message:message,
-                _subject:subject,
-                _replyto:customerEmail,
-                _template:"table"
-            })
-        }
-    )
-    .then(function(response){
-        return response.json();
-    })
-    .then(function(data){
+    form.method = "POST";
+    form.action =
+        "https://formsubmit.co/" + BUSINESS_EMAIL;
+    form.target = "_blank";
 
-        if(data.success){
+    const fields = {
+        "_subject": subject,
+        "_captcha": "false",
+        "_template": "table",
+        "_replyto":
+            document.getElementById("email")
+            ? document.getElementById("email").value.trim()
+            : "",
+        "message": message
+    };
 
-            showToast(
-                "Enquiry sent successfully! We will contact you soon."
-            );
+    Object.keys(fields).forEach(function(key){
 
-        }else{
+        const input = document.createElement("input");
 
-            showToast(
-                "Unable to send enquiry. Please try again."
-            );
+        input.type = "hidden";
+        input.name = key;
+        input.value = fields[key];
 
-        }
-
-    })
-    .catch(function(error){
-
-        console.error(error);
-
-        showToast(
-            "Unable to send enquiry. Please try again."
-        );
+        form.appendChild(input);
 
     });
+
+    document.body.appendChild(form);
+
+    form.submit();
+
+    form.remove();
 
 }
 
@@ -2579,111 +2564,21 @@ document
 .getElementById("bookingForm")
 .addEventListener("submit",function(event){
 
-    event.preventDefault();
+    const form = event.currentTarget;
 
-    const name =
-    document.getElementById("name")
-    .value.trim();
+    if(!form.checkValidity()){
 
-    const email =
-    document.getElementById("email")
-    .value.trim();
-
-    const phone =
-    document.getElementById("phone")
-    .value.trim();
-
-    const destination =
-    document.getElementById(
-        "destinationSelect"
-    ).value;
-
-    const travelDate =
-    document.getElementById(
-        "travelDate"
-    ).value;
-
-    const travellers =
-    document.getElementById(
-        "travellers"
-    ).value;
-
-    const messageText =
-    document.getElementById(
-        "message"
-    ).value.trim();
-
-    if(!name ||
-       !email ||
-       !phone ||
-       !destination){
-
-        showToast(
-            "Please complete all required fields."
-        );
-
+        event.preventDefault();
+        form.reportValidity();
         return;
-    }
-
-    let formattedDate = "Not specified";
-
-    if(travelDate){
-
-        formattedDate =
-        new Date(
-            travelDate + "T00:00:00"
-        ).toLocaleDateString(
-            "en-IN",
-            {
-                day:"numeric",
-                month:"long",
-                year:"numeric"
-            }
-        );
 
     }
 
-    const emailMessage =
-    "🌴 New Travel Enquiry\n\n" +
-
-    "Name: " +
-    name +
-    "\n" +
-
-    "Email: " +
-    email +
-    "\n" +
-
-    "Phone: " +
-    phone +
-    "\n" +
-
-    "Destination: " +
-    destination +
-    "\n" +
-
-    "Travel Date: " +
-    formattedDate +
-    "\n" +
-
-    "Travellers: " +
-    travellers +
-    "\n\n" +
-
-    "Trip Requirements:\n" +
-
-    (
-        messageText ||
-        "No additional requirements."
+    showToast(
+        "Sending your travel enquiry..."
     );
 
-    openEmail(
-        "New Travel Enquiry - " +
-        destination,
-        emailMessage
-    );
-
-});
+}););
 
 
 /* =========================================================
