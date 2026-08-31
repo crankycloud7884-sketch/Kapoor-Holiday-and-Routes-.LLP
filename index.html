@@ -1640,6 +1640,7 @@ help you plan your journey.
 
 <input
 id="name"
+name="name"
 type="text"
 placeholder="Your name"
 required>
@@ -1652,6 +1653,7 @@ required>
 
 <input
 id="email"
+name="email"
 type="email"
 placeholder="pankajkapoor@kapoorroutesholiday.com"
 required>
@@ -1664,6 +1666,7 @@ required>
 
 <input
 id="phone"
+name="phone"
 type="tel"
 placeholder="9971119592"
 required>
@@ -1702,6 +1705,7 @@ Travel Date
 
 <input
 id="travelDate"
+name="travelDate"
 type="date">
 
 </div>
@@ -1733,6 +1737,7 @@ Tell us about your trip
 
 <textarea
 id="message"
+name="message"
 placeholder="Tell us your preferred destination, dates, budget or special requirements..."></textarea>
 
 </div>
@@ -2189,19 +2194,58 @@ document
 
 function openEmail(subject,message){
 
-    /*
-       Open Gmail directly instead of using mailto.
-       This works in the browser even when no default
-       email program is configured on the computer.
-    */
+    const customerEmail =
+        document.getElementById("email")
+        ? document.getElementById("email").value.trim()
+        : "";
 
-    const gmailUrl =
-        "https://mail.google.com/mail/?view=cm&fs=1" +
-        "&to=" + encodeURIComponent(BUSINESS_EMAIL) +
-        "&su=" + encodeURIComponent(subject) +
-        "&body=" + encodeURIComponent(message);
+    fetch(
+        "https://formsubmit.co/ajax/" + BUSINESS_EMAIL,
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+                "Accept":"application/json"
+            },
+            body:JSON.stringify({
+                name:"Website Travel Enquiry",
+                email:customerEmail,
+                message:message,
+                _subject:subject,
+                _replyto:customerEmail,
+                _template:"table"
+            })
+        }
+    )
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data){
 
-    window.location.href = gmailUrl;
+        if(data.success){
+
+            showToast(
+                "Enquiry sent successfully! We will contact you soon."
+            );
+
+        }else{
+
+            showToast(
+                "Unable to send enquiry. Please try again."
+            );
+
+        }
+
+    })
+    .catch(function(error){
+
+        console.error(error);
+
+        showToast(
+            "Unable to send enquiry. Please try again."
+        );
+
+    });
 
 }
 
