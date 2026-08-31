@@ -845,9 +845,9 @@ footer a:hover{
     opacity:1;
 }
 
-/* ================= WHATSAPP ================= */
+/* ================= EMAIL BUTTON ================= */
 
-.whatsapp{
+.email-button{
     position:fixed;
     right:20px;
     bottom:20px;
@@ -857,15 +857,16 @@ footer a:hover{
     border-radius:50%;
     display:grid;
     place-items:center;
-    background:#25D366;
+    background:#0b5ed7;
     color:white;
-    font-size:28px;
+    font-size:27px;
     box-shadow:0 8px 25px rgba(0,0,0,.2);
     transition:.25s;
 }
 
-.whatsapp:hover{
+.email-button:hover{
     transform:scale(1.08);
+    background:var(--primary-dark);
 }
 
 /* ================= RESPONSIVE ================= */
@@ -987,7 +988,7 @@ footer a:hover{
         padding:65px 0;
     }
 
-    .whatsapp{
+    .email-button{
         right:15px;
         bottom:15px;
     }
@@ -1160,7 +1161,7 @@ One Way
 <button class="btn"
 id="flightBookBtn"
 style="background:#0b5ed7;color:white;">
-    📱 Continue With This Enquiry
+    📧 Continue With Email Enquiry
 </button>
 
 </div>
@@ -1742,7 +1743,7 @@ placeholder="Tell us your preferred destination, dates, budget or special requir
 class="btn submit-btn"
 type="submit">
 
-📱 Send Request on WhatsApp
+📧 Send Request by Email
 
 </button>
 
@@ -1782,7 +1783,7 @@ How do I book a holiday package?
 <div class="faq-answer">
 Choose a package, click Book Now and complete
 the travel request form. Your enquiry will then
-be sent to our team through WhatsApp.
+be prepared in your email application.
 </div>
 
 </div>
@@ -1889,15 +1890,14 @@ pankajkapoor@kapoorroutesholiday.com
 
 <div class="contact-card">
 
-<div class="icon">💬</div>
+<div class="icon">📧</div>
 
-<h3>WhatsApp</h3>
+<h3>Send Email</h3>
 
 <p>
 <a class="contact-link"
-href="https://wa.me/919971119592"
-target="_blank">
-Chat With Us
+href="mailto:pankajkapoor@kapoorroutesholiday.com">
+Email Us
 </a>
 </p>
 
@@ -1993,16 +1993,15 @@ Travel • Explore • Discover
 </div>
 </footer>
 
-<!-- ================= WHATSAPP ================= -->
+<!-- ================= FLOATING EMAIL ================= -->
 
 <a
-href="https://wa.me/919971119592"
-id="whatsappButton"
-class="whatsapp"
-aria-label="WhatsApp"
-target="_blank">
+href="mailto:pankajkapoor@kapoorroutesholiday.com"
+id="emailButton"
+class="email-button"
+aria-label="Email kapoorroutesholiday">
 
-💬
+📧
 
 </a>
 
@@ -2017,7 +2016,7 @@ target="_blank">
 </button>
 
 <div style="font-size:50px;">
-✈️
+📧
 </div>
 
 <h2 id="modalTitle">
@@ -2049,8 +2048,6 @@ Okay
 /* =========================================================
    BUSINESS SETTINGS
 ========================================================= */
-
-const WHATSAPP_NUMBER = "919971119592";
 
 const BUSINESS_EMAIL =
 "pankajkapoor@kapoorroutesholiday.com";
@@ -2187,34 +2184,37 @@ document
 
 
 /* =========================================================
-   WHATSAPP
+   EMAIL FUNCTION
 ========================================================= */
 
-function openWhatsApp(message){
+function openEmail(subject,message){
 
     const url =
-    "https://wa.me/" +
-    WHATSAPP_NUMBER +
-    "?text=" +
-    encodeURIComponent(message);
+        "mailto:" +
+        BUSINESS_EMAIL +
+        "?subject=" +
+        encodeURIComponent(subject) +
+        "&body=" +
+        encodeURIComponent(message);
 
-    window.open(url,"_blank");
+    window.location.href = url;
 
 }
 
 
 /* =========================================================
-   FLOATING WHATSAPP BUTTON
+   FLOATING EMAIL BUTTON
 ========================================================= */
 
 document
-.getElementById("whatsappButton")
+.getElementById("emailButton")
 .addEventListener("click",function(event){
 
     event.preventDefault();
 
-    openWhatsApp(
-        "Hello kapoorroutesholiday, I would like to enquire about your travel services."
+    openEmail(
+        "Travel Enquiry - kapoorroutesholiday",
+        "Hello kapoorroutesholiday,\n\nI would like to enquire about your travel services."
     );
 
 });
@@ -2324,7 +2324,7 @@ flightForm.addEventListener("submit",function(event){
 
 
 /* =========================================================
-   CONTINUE FLIGHT ENQUIRY
+   CONTINUE FLIGHT ENQUIRY BY EMAIL
 ========================================================= */
 
 document
@@ -2352,6 +2352,15 @@ document
         'input[name="trip"]:checked'
     ).value;
 
+    if(!from || !to || !departure){
+
+        showToast(
+            "Please complete the flight enquiry first."
+        );
+
+        return;
+    }
+
     const formattedDate =
     new Date(
         departure + "T00:00:00"
@@ -2366,20 +2375,35 @@ document
 
     const message =
     "✈️ Flight Enquiry\n\n" +
-    "From: " + from + "\n" +
-    "To: " + to + "\n" +
+
+    "From: " +
+    from +
+    "\n" +
+
+    "To: " +
+    to +
+    "\n" +
+
     "Trip: " +
     (trip === "round"
         ? "Round Trip"
         : "One Way") +
     "\n" +
+
     "Departure: " +
     formattedDate +
     "\n" +
+
     "Passengers: " +
     passengers;
 
-    openWhatsApp(message);
+    openEmail(
+        "Flight Enquiry - " +
+        from +
+        " to " +
+        to,
+        message
+    );
 
 });
 
@@ -2571,7 +2595,7 @@ document
 
     }
 
-    const whatsappMessage =
+    const emailMessage =
     "🌴 New Travel Enquiry\n\n" +
 
     "Name: " +
@@ -2599,14 +2623,16 @@ document
     "\n\n" +
 
     "Trip Requirements:\n" +
-    (messageText ||
-     "No additional requirements.");
 
-    openWhatsApp(whatsappMessage);
+    (
+        messageText ||
+        "No additional requirements."
+    );
 
-    showModal(
-        "Thank You!",
-        "Your travel enquiry is ready. WhatsApp will open so you can send it to kapoorroutesholiday."
+    openEmail(
+        "New Travel Enquiry - " +
+        destination,
+        emailMessage
     );
 
 });
