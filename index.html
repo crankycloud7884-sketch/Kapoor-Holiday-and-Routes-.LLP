@@ -2189,15 +2189,19 @@ document
 
 function openEmail(subject,message){
 
-    const url =
-        "mailto:" +
-        BUSINESS_EMAIL +
-        "?subject=" +
-        encodeURIComponent(subject) +
-        "&body=" +
-        encodeURIComponent(message);
+    /*
+       Open Gmail directly instead of using mailto.
+       This works in the browser even when no default
+       email program is configured on the computer.
+    */
 
-    window.location.href = url;
+    const gmailUrl =
+        "https://mail.google.com/mail/?view=cm&fs=1" +
+        "&to=" + encodeURIComponent(BUSINESS_EMAIL) +
+        "&su=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(message);
+
+    window.location.href = gmailUrl;
 
 }
 
