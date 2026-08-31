@@ -9,6 +9,7 @@
 <meta name="description" content="kapoorroutesholiday - Flight enquiries, holiday packages, hotel assistance and personalised travel planning.">
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -25,6 +26,9 @@
     --light:#f5f8fc;
     --white:#fff;
     --border:#dfe6ef;
+    --success:#198754;
+    --danger:#dc3545;
+    --warning:#f59f00;
     --shadow:0 10px 35px rgba(16,32,51,.10);
     --radius:16px;
 }
@@ -665,38 +669,208 @@ textarea{
     color:white;
 }
 
-/* ================= CONTACT ================= */
+/* ================= BOOKING TRACKER ================= */
 
-.contact-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
+.tracker-section{
+    background:white;
 }
 
-.contact-card{
-    text-align:center;
+.tracker-box{
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
     border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:30px;
 }
 
-.contact-card .icon{
-    font-size:35px;
-    margin-bottom:12px;
+.tracker-search{
+    display:flex;
+    gap:12px;
 }
 
-.contact-card h3{
-    color:var(--dark);
-    margin-bottom:5px;
+.tracker-search input{
+    flex:1;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px;
 }
 
-.contact-link{
-    color:var(--primary);
+.tracker-btn{
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:14px 22px;
+    border-radius:10px;
     font-weight:700;
 }
 
-.contact-link:hover{
-    text-decoration:underline;
+.booking-result{
+    display:none;
+    margin-top:25px;
+    border:1px solid var(--border);
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.booking-result.show{
+    display:block;
+}
+
+.booking-result-header{
+    padding:20px;
+    background:var(--light);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.booking-result-header h3{
+    color:var(--dark);
+}
+
+.status{
+    display:inline-block;
+    padding:7px 13px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:800;
+}
+
+.status.pending{
+    background:#fff3cd;
+    color:#856404;
+}
+
+.status.confirmed{
+    background:#d1e7dd;
+    color:#0f5132;
+}
+
+.status.cancelled{
+    background:#f8d7da;
+    color:#842029;
+}
+
+.booking-details{
+    padding:25px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.detail{
+    padding:14px;
+    background:#fafbfd;
+    border-radius:10px;
+}
+
+.detail strong{
+    display:block;
+    color:var(--dark);
+    font-size:13px;
+    margin-bottom:3px;
+}
+
+/* ================= ADMIN ================= */
+
+.admin-section{
+    background:var(--light);
+}
+
+.admin-box{
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.admin-warning{
+    background:#fff3cd;
+    color:#664d03;
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:20px;
+    font-size:14px;
+}
+
+.admin-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.admin-btn{
+    border:none;
+    color:white;
+    background:var(--primary);
+    padding:13px 18px;
+    border-radius:10px;
+    font-weight:700;
+    margin-top:10px;
+}
+
+.admin-btn.confirm{
+    background:var(--success);
+}
+
+.admin-btn.cancel{
+    background:var(--danger);
+}
+
+.booking-list{
+    margin-top:30px;
+}
+
+.booking-row{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:12px;
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr auto;
+    gap:15px;
+    align-items:center;
+}
+
+.booking-row strong{
+    color:var(--dark);
+}
+
+.booking-row small{
+    display:block;
+    color:#6c757d;
+}
+
+.row-actions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.row-actions button{
+    border:none;
+    padding:8px 11px;
+    border-radius:7px;
+    color:white;
+    font-size:12px;
+    font-weight:700;
+}
+
+.confirm-row{
+    background:var(--success);
+}
+
+.cancel-row{
+    background:var(--danger);
+}
+
+.delete-row{
+    background:#6c757d;
 }
 
 /* ================= FAQ ================= */
@@ -739,6 +913,40 @@ textarea{
 
 .faq-item.open .faq-answer{
     display:block;
+}
+
+/* ================= CONTACT ================= */
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.contact-card{
+    text-align:center;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:30px;
+}
+
+.contact-card .icon{
+    font-size:35px;
+    margin-bottom:12px;
+}
+
+.contact-card h3{
+    color:var(--dark);
+    margin-bottom:5px;
+}
+
+.contact-link{
+    color:var(--primary);
+    font-weight:700;
+}
+
+.contact-link:hover{
+    text-decoration:underline;
 }
 
 /* ================= FOOTER ================= */
@@ -889,6 +1097,10 @@ footer a:hover{
     .footer-grid{
         grid-template-columns:repeat(2,1fr);
     }
+
+    .booking-row{
+        grid-template-columns:1fr 1fr;
+    }
 }
 
 @media(max-width:800px){
@@ -955,7 +1167,9 @@ footer a:hover{
     .destination-grid,
     .package-grid,
     .service-grid,
-    .contact-grid{
+    .contact-grid,
+    .admin-grid,
+    .booking-details{
         grid-template-columns:1fr;
     }
 
@@ -992,7 +1206,16 @@ footer a:hover{
         right:15px;
         bottom:15px;
     }
+
+    .tracker-search{
+        flex-direction:column;
+    }
+
+    .booking-row{
+        grid-template-columns:1fr;
+    }
 }
+
 </style>
 </head>
 
@@ -1013,13 +1236,17 @@ footer a:hover{
 </button>
 
 <ul class="nav-links" id="navLinks">
+
     <li><a href="#home">Home</a></li>
     <li><a href="#flights">Flights</a></li>
     <li><a href="#destinations">Destinations</a></li>
     <li><a href="#packages">Packages</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#track">Track Booking</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact" class="nav-button">Contact Us</a></li>
+
 </ul>
 
 </div>
@@ -1065,6 +1292,7 @@ footer a:hover{
 </div>
 </div>
 </section>
+
 
 <!-- ================= FLIGHT ENQUIRY ================= -->
 
@@ -1135,6 +1363,7 @@ One Way
 </div>
 </div>
 
+
 <!-- ================= FLIGHT RESULT ================= -->
 
 <section id="flightResults">
@@ -1167,6 +1396,7 @@ style="background:#0b5ed7;color:white;">
 </div>
 </div>
 </section>
+
 
 <!-- ================= DESTINATIONS ================= -->
 
@@ -1241,6 +1471,7 @@ data-destination="Rajasthan">
 </div>
 </section>
 
+
 <!-- ================= PACKAGES ================= -->
 
 <section class="packages-section" id="packages">
@@ -1282,8 +1513,6 @@ Culture
 
 <div class="package-grid">
 
-<!-- KASHMIR -->
-
 <article class="package-card" data-category="adventure">
 
 <div class="package-image">🏔️</div>
@@ -1314,7 +1543,6 @@ Book Now
 </div>
 </article>
 
-<!-- GOA -->
 
 <article class="package-card" data-category="beach">
 
@@ -1346,7 +1574,6 @@ Book Now
 </div>
 </article>
 
-<!-- RAJASTHAN -->
 
 <article class="package-card" data-category="culture">
 
@@ -1378,7 +1605,6 @@ Book Now
 </div>
 </article>
 
-<!-- HIMACHAL -->
 
 <article class="package-card" data-category="adventure">
 
@@ -1410,7 +1636,6 @@ Book Now
 </div>
 </article>
 
-<!-- KERALA -->
 
 <article class="package-card" data-category="culture">
 
@@ -1442,7 +1667,6 @@ Book Now
 </div>
 </article>
 
-<!-- ANDAMAN -->
 
 <article class="package-card" data-category="beach">
 
@@ -1477,6 +1701,7 @@ Book Now
 </div>
 </div>
 </section>
+
 
 <!-- ================= SERVICES ================= -->
 
@@ -1555,6 +1780,7 @@ travel requirements in one place.
 </div>
 </section>
 
+
 <!-- ================= ABOUT ================= -->
 
 <section id="about">
@@ -1609,7 +1835,8 @@ transparent and convenient.
 </div>
 </section>
 
-<!-- ================= BOOKING ================= -->
+
+<!-- ================= CUSTOMER BOOKING FORM ================= -->
 
 <section class="booking-section" id="booking">
 
@@ -1617,13 +1844,13 @@ transparent and convenient.
 
 <div class="section-heading">
 
-<div class="tag">Plan Your Trip</div>
+<div class="tag">Customer Booking</div>
 
 <h2>Send Us Your Travel Request</h2>
 
 <p>
-Tell us what you're looking for and we'll
-help you plan your journey.
+Fill in your details and we will contact you
+to confirm your booking.
 </p>
 
 </div>
@@ -1633,10 +1860,21 @@ help you plan your journey.
 <form
 id="bookingForm"
 action="https://formsubmit.co/pankajkapoor@kapoorroutesholiday.com"
-method="POST">
+method="POST"
+target="_blank">
 
-<input type="hidden" name="_subject" value="New Travel Enquiry - kapoorroutesholiday">
-<input type="hidden" name="_template" value="table">
+<input type="hidden"
+name="_subject"
+value="New Customer Booking - kapoorroutesholiday">
+
+<input type="hidden"
+name="_template"
+value="table">
+
+<input type="hidden"
+name="_captcha"
+value="false">
+
 <div class="booking-grid">
 
 <div class="field">
@@ -1645,12 +1883,13 @@ method="POST">
 
 <input
 id="name"
-name="name"
+name="Customer Name"
 type="text"
-placeholder="Your name"
+placeholder="Customer full name"
 required>
 
 </div>
+
 
 <div class="field">
 
@@ -1658,12 +1897,13 @@ required>
 
 <input
 id="email"
-name="email"
+name="Customer Email"
 type="email"
-placeholder="pankajkapoor@kapoorroutesholiday.com"
+placeholder="Customer email"
 required>
 
 </div>
+
 
 <div class="field">
 
@@ -1671,12 +1911,13 @@ required>
 
 <input
 id="phone"
-name="phone"
+name="Customer Phone"
 type="tel"
-placeholder="9971119592"
+placeholder="Customer phone number"
 required>
 
 </div>
+
 
 <div class="field">
 
@@ -1684,7 +1925,10 @@ required>
 Destination *
 </label>
 
-<select id="destinationSelect" name="destination" required>
+<select
+id="destinationSelect"
+name="Destination"
+required>
 
 <option value="">
 Select destination
@@ -1702,6 +1946,22 @@ Select destination
 
 </div>
 
+
+<div class="field">
+
+<label for="packageSelect">
+Package
+</label>
+
+<input
+id="packageSelect"
+name="Package"
+type="text"
+placeholder="Example: Kashmir Escape">
+
+</div>
+
+
 <div class="field">
 
 <label for="travelDate">
@@ -1710,10 +1970,11 @@ Travel Date
 
 <input
 id="travelDate"
-name="travelDate"
+name="Travel Date"
 type="date">
 
 </div>
+
 
 <div class="field">
 
@@ -1721,7 +1982,9 @@ type="date">
 Travellers
 </label>
 
-<select id="travellers" name="travellers">
+<select
+id="travellers"
+name="Travellers">
 
 <option>1</option>
 <option>2</option>
@@ -1734,26 +1997,48 @@ Travellers
 
 </div>
 
+
+<div class="field">
+
+<label for="bookingType">
+Booking Type
+</label>
+
+<select
+id="bookingType"
+name="Booking Type">
+
+<option>Holiday Package</option>
+<option>Flight</option>
+<option>Hotel</option>
+<option>Custom Trip</option>
+
+</select>
+
+</div>
+
+
 <div class="field full">
 
 <label for="message">
-Tell us about your trip
+Special Requirements
 </label>
 
 <textarea
 id="message"
-name="message"
+name="Special Requirements"
 placeholder="Tell us your preferred destination, dates, budget or special requirements..."></textarea>
 
 </div>
 
 </div>
 
+
 <button
 class="btn submit-btn"
 type="submit">
 
-📧 Send Request by Email
+📧 Submit Booking Request
 
 </button>
 
@@ -1762,6 +2047,232 @@ type="submit">
 </div>
 </div>
 </section>
+
+
+<!-- ================= TRACK BOOKING ================= -->
+
+<section class="tracker-section" id="track">
+
+<div class="container">
+
+<div class="section-heading">
+
+<div class="tag">Booking Status</div>
+
+<h2>Track Your Booking</h2>
+
+<p>
+Enter your Booking ID to check your booking status
+and confirmation details.
+</p>
+
+</div>
+
+<div class="tracker-box">
+
+<div class="tracker-search">
+
+<input
+id="trackingId"
+type="text"
+placeholder="Enter Booking ID e.g. KRH-123456">
+
+<button
+class="tracker-btn"
+id="trackBtn">
+
+Track Booking
+
+</button>
+
+</div>
+
+
+<div
+class="booking-result"
+id="bookingResult">
+
+<div class="booking-result-header">
+
+<div>
+<h3 id="trackCustomer">
+Customer
+</h3>
+
+<small id="trackBookingId">
+Booking ID
+</small>
+</div>
+
+<span
+class="status pending"
+id="trackStatus">
+
+Pending
+
+</span>
+
+</div>
+
+
+<div class="booking-details">
+
+<div class="detail">
+
+<strong>Destination</strong>
+
+<span id="trackDestination">-</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>Package</strong>
+
+<span id="trackPackage">-</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>Travel Date</strong>
+
+<span id="trackDate">-</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>Travellers</strong>
+
+<span id="trackTravellers">-</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>Confirmed By</strong>
+
+<span id="trackConfirmedBy">
+Not confirmed yet
+</span>
+
+</div>
+
+
+<div class="detail">
+
+<strong>Confirmation Date</strong>
+
+<span id="trackConfirmedDate">
+Not confirmed yet
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+
+<!-- ================= ADMIN BOOKING MANAGEMENT ================= -->
+
+<section class="admin-section" id="admin">
+
+<div class="container">
+
+<div class="section-heading">
+
+<div class="tag">Booking Management</div>
+
+<h2>Manage Customer Bookings</h2>
+
+<p>
+Use this section to update the booking status
+and record who confirmed the booking.
+</p>
+
+</div>
+
+
+<div class="admin-box">
+
+<div class="admin-warning">
+
+⚠️ <strong>Important:</strong>
+This simple version stores bookings in this browser only.
+For a real multi-device booking system, a database is required.
+
+</div>
+
+
+<div class="admin-grid">
+
+<div class="field">
+
+<label for="adminName">
+Your Name / Confirmed By
+</label>
+
+<input
+id="adminName"
+type="text"
+placeholder="Example: Pankaj Kapoor">
+
+</div>
+
+
+<div class="field">
+
+<label for="adminBookingId">
+Booking ID
+</label>
+
+<input
+id="adminBookingId"
+type="text"
+placeholder="KRH-123456">
+
+</div>
+
+</div>
+
+
+<button
+class="admin-btn confirm"
+id="confirmBookingBtn">
+
+✓ Confirm Booking
+
+</button>
+
+
+<button
+class="admin-btn cancel"
+id="cancelBookingBtn">
+
+✕ Cancel Booking
+
+</button>
+
+
+<div class="booking-list"
+id="bookingList">
+
+</div>
+
+</div>
+</div>
+</section>
+
 
 <!-- ================= FAQ ================= -->
 
@@ -1792,11 +2303,12 @@ How do I book a holiday package?
 
 <div class="faq-answer">
 Choose a package, click Book Now and complete
-the travel request form. Your enquiry will be sent securely
+the travel request form. Your enquiry will be sent
 to kapoorroutesholiday by email.
 </div>
 
 </div>
+
 
 <div class="faq-item">
 
@@ -1813,20 +2325,39 @@ travellers and requirements.
 
 </div>
 
+
 <div class="faq-item">
 
 <button class="faq-question">
-Can you help with flights?
+How can I check my booking?
 <span>+</span>
 </button>
 
 <div class="faq-answer">
-Yes. You can submit your route, travel date and
-passenger requirements through the flight enquiry
-section.
+After submitting a booking, you will receive a
+Booking ID. Enter that Booking ID in the
+Track Booking section to view the booking status.
 </div>
 
 </div>
+
+
+<div class="faq-item">
+
+<button class="faq-question">
+Who confirmed my booking?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+Once the booking is confirmed, the person handling
+the booking can enter their name in the booking
+management section. The confirmation name and
+date will then appear with the booking.
+</div>
+
+</div>
+
 
 <div class="faq-item">
 
@@ -1847,6 +2378,7 @@ a current quote.
 </div>
 </div>
 </section>
+
 
 <!-- ================= CONTACT ================= -->
 
@@ -1883,6 +2415,7 @@ href="tel:+919971119592">
 
 </div>
 
+
 <div class="contact-card">
 
 <div class="icon">📧</div>
@@ -1897,6 +2430,7 @@ pankajkapoor@kapoorroutesholiday.com
 </p>
 
 </div>
+
 
 <div class="contact-card">
 
@@ -1918,6 +2452,7 @@ Email Us
 </section>
 
 </main>
+
 
 <!-- ================= FOOTER ================= -->
 
@@ -1946,46 +2481,67 @@ holidays and memorable journeys.
 
 </div>
 
+
 <div>
 
 <h4>Quick Links</h4>
 
 <ul>
+
 <li><a href="#home">Home</a></li>
+
 <li><a href="#flights">Flights</a></li>
+
 <li><a href="#packages">Packages</a></li>
-<li><a href="#contact">Contact</a></li>
+
+<li><a href="#booking">Book</a></li>
+
+<li><a href="#track">Track Booking</a></li>
+
 </ul>
 
 </div>
+
 
 <div>
 
 <h4>Services</h4>
 
 <ul>
+
 <li><a href="#services">Flight Assistance</a></li>
+
 <li><a href="#services">Holiday Packages</a></li>
+
 <li><a href="#services">Hotel Assistance</a></li>
+
 <li><a href="#services">Travel Planning</a></li>
+
 </ul>
 
 </div>
+
 
 <div>
 
 <h4>Explore</h4>
 
 <ul>
+
 <li><a href="#destinations">Destinations</a></li>
+
 <li><a href="#about">About Us</a></li>
+
 <li><a href="#booking">Book a Trip</a></li>
+
 <li><a href="#contact">Support</a></li>
+
 </ul>
 
 </div>
 
 </div>
+
 
 <div class="footer-bottom">
 
@@ -2003,6 +2559,7 @@ Travel • Explore • Discover
 </div>
 </footer>
 
+
 <!-- ================= FLOATING EMAIL ================= -->
 
 <a
@@ -2015,14 +2572,19 @@ aria-label="Email kapoorroutesholiday">
 
 </a>
 
+
 <!-- ================= MODAL ================= -->
 
 <div class="modal" id="modal">
 
 <div class="modal-content">
 
-<button class="close-modal" id="closeModal">
+<button
+class="close-modal"
+id="closeModal">
+
 ×
+
 </button>
 
 <div style="font-size:50px;">
@@ -2049,9 +2611,14 @@ Okay
 </div>
 </div>
 
+
 <!-- ================= TOAST ================= -->
 
-<div class="toast" id="toast"></div>
+<div
+class="toast"
+id="toast">
+</div>
+
 
 <script>
 
@@ -2199,47 +2766,59 @@ document
 
 function openEmail(subject,message){
 
-    const form = document.createElement("form");
+    const form =
+    document.createElement("form");
 
     form.method = "POST";
+
     form.action =
-        "https://formsubmit.co/" + BUSINESS_EMAIL;
+    "https://formsubmit.co/" +
+    BUSINESS_EMAIL;
+
     form.target = "_blank";
 
-    const customerEmail =
-        document.getElementById("email")
-        ? document.getElementById("email").value.trim()
-        : "";
 
     const fields = {
-        "_subject": subject,
-        "_template": "table",
-        "_captcha": "false",
-        "_replyto": customerEmail,
-        "message": message
+
+        "_subject":subject,
+
+        "_template":"table",
+
+        "_captcha":"false",
+
+        "message":message
+
     };
 
-    Object.keys(fields).forEach(function(key){
 
-        const input = document.createElement("input");
+    Object.keys(fields)
+    .forEach(function(key){
+
+        const input =
+        document.createElement("input");
 
         input.type = "hidden";
+
         input.name = key;
+
         input.value = fields[key];
 
         form.appendChild(input);
 
     });
 
+
     document.body.appendChild(form);
+
     form.submit();
+
     form.remove();
 
 }
 
 
 /* =========================================================
-   FLOATING EMAIL BUTTON
+   FLOATING EMAIL
 ========================================================= */
 
 document
@@ -2288,6 +2867,7 @@ flightForm.addEventListener("submit",function(event){
         'input[name="trip"]:checked'
     ).value;
 
+
     if(!from || !to || !departure){
 
         showToast(
@@ -2296,6 +2876,7 @@ flightForm.addEventListener("submit",function(event){
 
         return;
     }
+
 
     if(from.toLowerCase() ===
        to.toLowerCase()){
@@ -2307,8 +2888,12 @@ flightForm.addEventListener("submit",function(event){
         return;
     }
 
+
     const dateObject =
-    new Date(departure + "T00:00:00");
+    new Date(
+        departure + "T00:00:00"
+    );
+
 
     const formattedDate =
     dateObject.toLocaleDateString(
@@ -2320,15 +2905,18 @@ flightForm.addEventListener("submit",function(event){
         }
     );
 
+
     const tripText =
     trip === "round"
     ? "Round Trip"
     : "One Way";
 
+
     document
     .getElementById("resultRoute")
     .textContent =
     from + " → " + to;
+
 
     document
     .getElementById("resultDetails")
@@ -2340,17 +2928,21 @@ flightForm.addEventListener("submit",function(event){
     passengers +
     " passenger(s)";
 
+
     const results =
     document.getElementById(
         "flightResults"
     );
 
+
     results.style.display = "block";
+
 
     results.scrollIntoView({
         behavior:"smooth",
         block:"start"
     });
+
 
     showToast(
         "Flight enquiry prepared successfully."
@@ -2360,7 +2952,7 @@ flightForm.addEventListener("submit",function(event){
 
 
 /* =========================================================
-   CONTINUE FLIGHT ENQUIRY BY EMAIL
+   CONTINUE FLIGHT EMAIL
 ========================================================= */
 
 document
@@ -2388,6 +2980,7 @@ document
         'input[name="trip"]:checked'
     ).value;
 
+
     if(!from || !to || !departure){
 
         showToast(
@@ -2396,6 +2989,7 @@ document
 
         return;
     }
+
 
     const formattedDate =
     new Date(
@@ -2409,6 +3003,7 @@ document
         }
     );
 
+
     const message =
     "✈️ Flight Enquiry\n\n" +
 
@@ -2421,17 +3016,22 @@ document
     "\n" +
 
     "Trip: " +
-    (trip === "round"
+    (
+        trip === "round"
         ? "Round Trip"
-        : "One Way") +
+        : "One Way"
+    ) +
+
     "\n" +
 
     "Departure: " +
     formattedDate +
+
     "\n" +
 
     "Passengers: " +
     passengers;
+
 
     openEmail(
         "Flight Enquiry - " +
@@ -2464,15 +3064,19 @@ filterButtons.forEach(function(button){
 
         });
 
+
         button.classList.add("active");
+
 
         const filter =
         button.getAttribute("data-filter");
+
 
         packageCards.forEach(function(card){
 
             const category =
             card.getAttribute("data-category");
+
 
             if(
                 filter === "all" ||
@@ -2510,9 +3114,18 @@ document
         const destination =
         button.getAttribute("data-destination");
 
+
         document
         .getElementById("destinationSelect")
-        .value = destination;
+        .value =
+        destination;
+
+
+        document
+        .getElementById("packageSelect")
+        .value =
+        packageName;
+
 
         document
         .getElementById("message")
@@ -2521,11 +3134,13 @@ document
         packageName +
         " package.";
 
+
         document
         .getElementById("booking")
         .scrollIntoView({
             behavior:"smooth"
         });
+
 
         showToast(
             packageName +
@@ -2550,9 +3165,11 @@ document
         const destination =
         link.getAttribute("data-destination");
 
+
         document
         .getElementById("destinationSelect")
-        .value = destination;
+        .value =
+        destination;
 
     });
 
@@ -2560,10 +3177,747 @@ document
 
 
 /* =========================================================
-   BOOKING FORM
+   BOOKING ID GENERATOR
 ========================================================= */
 
-// Booking form uses normal HTML POST to FormSubmit.);
+function generateBookingId(){
+
+    const number =
+    Math.floor(
+        100000 +
+        Math.random() * 900000
+    );
+
+    return "KRH-" + number;
+
+}
+
+
+/* =========================================================
+   SAVE BOOKING
+========================================================= */
+
+function getBookings(){
+
+    return JSON.parse(
+        localStorage.getItem(
+            "kapoorBookings"
+        ) || "[]"
+    );
+
+}
+
+
+function saveBookings(bookings){
+
+    localStorage.setItem(
+        "kapoorBookings",
+        JSON.stringify(bookings)
+    );
+
+}
+
+
+/* =========================================================
+   CUSTOMER BOOKING FORM
+========================================================= */
+
+document
+.getElementById("bookingForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    const bookingId =
+    generateBookingId();
+
+
+    const booking = {
+
+        id:bookingId,
+
+        name:
+        document.getElementById("name")
+        .value.trim(),
+
+        email:
+        document.getElementById("email")
+        .value.trim(),
+
+        phone:
+        document.getElementById("phone")
+        .value.trim(),
+
+        destination:
+        document.getElementById("destinationSelect")
+        .value,
+
+        package:
+        document.getElementById("packageSelect")
+        .value,
+
+        travelDate:
+        document.getElementById("travelDate")
+        .value,
+
+        travellers:
+        document.getElementById("travellers")
+        .value,
+
+        bookingType:
+        document.getElementById("bookingType")
+        .value,
+
+        message:
+        document.getElementById("message")
+        .value.trim(),
+
+        status:"Pending",
+
+        confirmedBy:"",
+
+        confirmedDate:"",
+
+        createdDate:
+        new Date().toISOString()
+
+    };
+
+
+    const bookings =
+    getBookings();
+
+
+    bookings.push(booking);
+
+    saveBookings(bookings);
+
+
+    /* Send booking details to business email */
+
+    const emailMessage =
+
+    "NEW CUSTOMER BOOKING\n\n" +
+
+    "Booking ID: " +
+    booking.id +
+
+    "\nCustomer Name: " +
+    booking.name +
+
+    "\nEmail: " +
+    booking.email +
+
+    "\nPhone: " +
+    booking.phone +
+
+    "\nDestination: " +
+    booking.destination +
+
+    "\nPackage: " +
+    booking.package +
+
+    "\nTravel Date: " +
+    booking.travelDate +
+
+    "\nTravellers: " +
+    booking.travellers +
+
+    "\nBooking Type: " +
+    booking.bookingType +
+
+    "\nSpecial Requirements: " +
+    booking.message;
+
+
+    openEmail(
+        "New Customer Booking - " +
+        booking.id,
+        emailMessage
+    );
+
+
+    /* Show booking ID */
+
+    showModal(
+        "Booking Request Submitted",
+        "Your Booking ID is " +
+        booking.id +
+        ". Please save this ID to track your booking."
+    );
+
+
+    /* Reset form */
+
+    document
+    .getElementById("bookingForm")
+    .reset();
+
+
+    renderAdminBookings();
+
+});
+
+
+/* =========================================================
+   TRACK BOOKING
+========================================================= */
+
+document
+.getElementById("trackBtn")
+.addEventListener("click",function(){
+
+    const id =
+    document
+    .getElementById("trackingId")
+    .value
+    .trim()
+    .toUpperCase();
+
+
+    if(!id){
+
+        showToast(
+            "Please enter your Booking ID."
+        );
+
+        return;
+
+    }
+
+
+    const bookings =
+    getBookings();
+
+
+    const booking =
+    bookings.find(function(item){
+
+        return item.id === id;
+
+    });
+
+
+    if(!booking){
+
+        showToast(
+            "Booking ID not found."
+        );
+
+        document
+        .getElementById("bookingResult")
+        .classList.remove("show");
+
+        return;
+
+    }
+
+
+    document
+    .getElementById("trackCustomer")
+    .textContent =
+    booking.name;
+
+
+    document
+    .getElementById("trackBookingId")
+    .textContent =
+    booking.id;
+
+
+    document
+    .getElementById("trackDestination")
+    .textContent =
+    booking.destination || "-";
+
+
+    document
+    .getElementById("trackPackage")
+    .textContent =
+    booking.package || "-";
+
+
+    document
+    .getElementById("trackDate")
+    .textContent =
+    booking.travelDate || "-";
+
+
+    document
+    .getElementById("trackTravellers")
+    .textContent =
+    booking.travellers || "-";
+
+
+    document
+    .getElementById("trackConfirmedBy")
+    .textContent =
+    booking.confirmedBy ||
+    "Not confirmed yet";
+
+
+    document
+    .getElementById("trackConfirmedDate")
+    .textContent =
+    booking.confirmedDate ||
+    "Not confirmed yet";
+
+
+    const status =
+    document.getElementById(
+        "trackStatus"
+    );
+
+
+    status.textContent =
+    booking.status;
+
+
+    status.className =
+    "status " +
+    booking.status.toLowerCase();
+
+
+    document
+    .getElementById("bookingResult")
+    .classList.add("show");
+
+});
+
+
+/* =========================================================
+   CONFIRM BOOKING
+========================================================= */
+
+document
+.getElementById("confirmBookingBtn")
+.addEventListener("click",function(){
+
+    const adminName =
+    document
+    .getElementById("adminName")
+    .value.trim();
+
+
+    const bookingId =
+    document
+    .getElementById("adminBookingId")
+    .value.trim()
+    .toUpperCase();
+
+
+    if(!adminName){
+
+        showToast(
+            "Please enter the name of the person confirming the booking."
+        );
+
+        return;
+
+    }
+
+
+    if(!bookingId){
+
+        showToast(
+            "Please enter the Booking ID."
+        );
+
+        return;
+
+    }
+
+
+    updateBookingStatus(
+        bookingId,
+        "Confirmed",
+        adminName
+    );
+
+});
+
+
+/* =========================================================
+   CANCEL BOOKING
+========================================================= */
+
+document
+.getElementById("cancelBookingBtn")
+.addEventListener("click",function(){
+
+    const adminName =
+    document
+    .getElementById("adminName")
+    .value.trim();
+
+
+    const bookingId =
+    document
+    .getElementById("adminBookingId")
+    .value.trim()
+    .toUpperCase();
+
+
+    if(!adminName){
+
+        showToast(
+            "Please enter your name."
+        );
+
+        return;
+
+    }
+
+
+    if(!bookingId){
+
+        showToast(
+            "Please enter the Booking ID."
+        );
+
+        return;
+
+    }
+
+
+    updateBookingStatus(
+        bookingId,
+        "Cancelled",
+        adminName
+    );
+
+});
+
+
+/* =========================================================
+   UPDATE BOOKING STATUS
+========================================================= */
+
+function updateBookingStatus(
+    bookingId,
+    status,
+    person
+){
+
+    const bookings =
+    getBookings();
+
+
+    const index =
+    bookings.findIndex(function(item){
+
+        return item.id === bookingId;
+
+    });
+
+
+    if(index === -1){
+
+        showToast(
+            "Booking ID not found."
+        );
+
+        return;
+
+    }
+
+
+    bookings[index].status =
+    status;
+
+
+    bookings[index].confirmedBy =
+    person;
+
+
+    bookings[index].confirmedDate =
+    new Date()
+    .toLocaleDateString(
+        "en-IN",
+        {
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        }
+    );
+
+
+    saveBookings(bookings);
+
+
+    showToast(
+        "Booking " +
+        bookingId +
+        " updated successfully."
+    );
+
+
+    renderAdminBookings();
+
+
+    /* Update tracker automatically */
+
+    document
+    .getElementById("trackingId")
+    .value =
+    bookingId;
+
+    document
+    .getElementById("trackBtn")
+    .click();
+
+
+    /* Clear admin ID */
+
+    document
+    .getElementById("adminBookingId")
+    .value = "";
+
+}
+
+
+/* =========================================================
+   ADMIN BOOKING LIST
+========================================================= */
+
+function renderAdminBookings(){
+
+    const list =
+    document.getElementById(
+        "bookingList"
+    );
+
+
+    const bookings =
+    getBookings();
+
+
+    if(bookings.length === 0){
+
+        list.innerHTML =
+        "<p>No bookings yet.</p>";
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    bookings
+    .slice()
+    .reverse()
+    .forEach(function(booking){
+
+        const row =
+        document.createElement("div");
+
+        row.className =
+        "booking-row";
+
+
+        row.innerHTML = `
+
+            <div>
+
+                <strong>
+                    ${escapeHTML(booking.name)}
+                </strong>
+
+                <small>
+                    ${escapeHTML(booking.id)}
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    ${escapeHTML(booking.destination || "-")}
+                </strong>
+
+                <small>
+                    ${escapeHTML(booking.package || "-")}
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <span class="status ${booking.status.toLowerCase()}">
+                    ${escapeHTML(booking.status)}
+                </span>
+
+                <small>
+                    ${
+                        booking.confirmedBy
+                        ? "By: " +
+                          escapeHTML(booking.confirmedBy)
+                        : "Not confirmed"
+                    }
+                </small>
+
+            </div>
+
+
+            <div class="row-actions">
+
+                <button
+                class="confirm-row"
+                onclick="quickConfirm('${booking.id}')">
+
+                Confirm
+
+                </button>
+
+
+                <button
+                class="cancel-row"
+                onclick="quickCancel('${booking.id}')">
+
+                Cancel
+
+                </button>
+
+
+                <button
+                class="delete-row"
+                onclick="deleteBooking('${booking.id}')">
+
+                Delete
+
+                </button>
+
+            </div>
+
+        `;
+
+
+        list.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================================================
+   QUICK CONFIRM
+========================================================= */
+
+function quickConfirm(id){
+
+    const person =
+    prompt(
+        "Enter the name of the person who confirmed this booking:"
+    );
+
+
+    if(!person){
+
+        return;
+
+    }
+
+
+    updateBookingStatus(
+        id,
+        "Confirmed",
+        person
+    );
+
+}
+
+
+/* =========================================================
+   QUICK CANCEL
+========================================================= */
+
+function quickCancel(id){
+
+    const person =
+    prompt(
+        "Enter your name:"
+    );
+
+
+    if(!person){
+
+        return;
+
+    }
+
+
+    updateBookingStatus(
+        id,
+        "Cancelled",
+        person
+    );
+
+}
+
+
+/* =========================================================
+   DELETE BOOKING
+========================================================= */
+
+function deleteBooking(id){
+
+    const confirmDelete =
+    confirm(
+        "Are you sure you want to delete this booking?"
+    );
+
+
+    if(!confirmDelete){
+
+        return;
+
+    }
+
+
+    let bookings =
+    getBookings();
+
+
+    bookings =
+    bookings.filter(function(item){
+
+        return item.id !== id;
+
+    });
+
+
+    saveBookings(bookings);
+
+
+    renderAdminBookings();
+
+
+    showToast(
+        "Booking deleted."
+    );
+
+}
+
+
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
 
 
 /* =========================================================
@@ -2579,12 +3933,17 @@ document
         const item =
         button.parentElement;
 
+
         item.classList.toggle("open");
+
 
         const symbol =
         button.querySelector("span");
 
-        if(item.classList.contains("open")){
+
+        if(
+            item.classList.contains("open")
+        ){
 
             symbol.textContent = "−";
 
@@ -2597,6 +3956,13 @@ document
     });
 
 });
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+renderAdminBookings();
 
 </script>
 
