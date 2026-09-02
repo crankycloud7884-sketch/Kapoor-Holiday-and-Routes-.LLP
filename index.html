@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -940,6 +939,41 @@ footer a:hover{
     background:var(--primary-dark);
 }
 
+
+/* OWNER / BOOKING MANAGEMENT */
+.owner-lock{
+    background:linear-gradient(135deg,#102033,#0b5ed7);
+    color:white;
+    padding:22px;
+    border-radius:14px;
+    margin-bottom:22px;
+}
+.owner-lock h3{margin-bottom:6px}
+.owner-lock p{font-size:14px;opacity:.9;margin-bottom:15px}
+.owner-login{display:grid;grid-template-columns:1fr auto;gap:10px}
+.owner-login input{border:none!important;background:white!important}
+.owner-login button{border:none;background:white;color:#0b5ed7;padding:13px 18px;border-radius:10px;font-weight:800}
+.owner-message{margin-top:10px;font-size:13px;display:none}
+.management-panel{display:none}
+.management-panel.unlocked{display:block}
+.selected-booking-card{
+    background:var(--light);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:22px;
+}
+.selected-booking-card h3{color:var(--dark);margin-bottom:10px}
+.booking-mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.booking-mini-item{background:white;padding:12px;border-radius:10px;border:1px solid var(--border)}
+.booking-mini-item strong{display:block;color:var(--dark);font-size:12px;margin-bottom:3px}
+.booking-count{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:15px}
+.no-bookings{padding:18px;background:#fff7e6;border:1px solid #ffe0a3;border-radius:12px;margin-bottom:20px}
+@media(max-width:600px){
+    .owner-login{grid-template-columns:1fr}
+    .booking-mini-grid{grid-template-columns:1fr}
+}
+
 /* RESPONSIVE */
 
 @media(max-width:1000px){
@@ -1805,161 +1839,107 @@ type="submit">
 </section>
 
 <!-- CONFIRMATION SYSTEM -->
-
 <section class="confirmation-section" id="confirmation">
-
 <div class="container">
-
 <div class="section-heading">
-
 <div class="tag">Booking Management</div>
-
 <h2>Booking Confirmation</h2>
-
-<p>
-After receiving a customer booking, enter the details
-below to record who confirmed it.
-</p>
-
+<p>Select one customer booking, then update only that customer's confirmation status.</p>
 </div>
 
 <div class="confirmation-box">
 
+<div class="owner-lock" id="ownerLock">
+<h3>🔐 Owner Editing Access</h3>
+<p>Booking confirmation editing is available only after entering the authorised owner email.</p>
+<div class="owner-login">
+<input id="ownerEmail" type="email" placeholder="Enter authorised email address">
+<button type="button" id="ownerLoginBtn">Unlock Editing</button>
+</div>
+<div class="owner-message" id="ownerMessage"></div>
+</div>
+
+<div class="management-panel" id="managementPanel">
+
+<div class="booking-count" id="bookingCount">0 customer bookings saved on this device.</div>
+
+<div id="noBookings" class="no-bookings">
+<strong>No customer bookings are available yet.</strong><br>
+Customer bookings submitted through the booking form on this browser will appear here automatically.
+</div>
+
+<div class="field" style="margin-bottom:20px;">
+<label for="selectCustomer">Select Customer *</label>
+<select id="selectCustomer">
+<option value="">Select a customer booking</option>
+</select>
+</div>
+
+<div class="selected-booking-card" id="selectedBookingCard" style="display:none;">
+<h3>Selected Customer</h3>
+<div class="booking-mini-grid">
+<div class="booking-mini-item"><strong>Booking ID</strong><span id="selectedBookingId">-</span></div>
+<div class="booking-mini-item"><strong>Customer</strong><span id="selectedCustomerInfo">-</span></div>
+<div class="booking-mini-item"><strong>Email</strong><span id="selectedEmailInfo">-</span></div>
+<div class="booking-mini-item"><strong>Phone</strong><span id="selectedPhoneInfo">-</span></div>
+<div class="booking-mini-item"><strong>Destination</strong><span id="selectedDestinationInfo">-</span></div>
+<div class="booking-mini-item"><strong>Travel Date</strong><span id="selectedTravelDateInfo">-</span></div>
+<div class="booking-mini-item"><strong>Travellers</strong><span id="selectedTravellersInfo">-</span></div>
+<div class="booking-mini-item"><strong>Booking Details</strong><span id="selectedMessageInfo">-</span></div>
+</div>
+</div>
+
 <form id="confirmationForm">
-
 <div class="confirmation-grid">
-
 <div class="field">
-
-<label for="confirmCustomer">
-Customer Name *
-</label>
-
-<input
-id="confirmCustomer"
-type="text"
-placeholder="Customer name"
-required>
-
+<label for="confirmCustomer">Customer Name *</label>
+<input id="confirmCustomer" type="text" readonly required>
 </div>
 
 <div class="field">
-
-<label for="bookingDetails">
-Booking Details *
-</label>
-
-<input
-id="bookingDetails"
-type="text"
-placeholder="e.g. Delhi to Goa flight"
-required>
-
+<label for="bookingDetails">Booking Details *</label>
+<input id="bookingDetails" type="text" readonly required>
 </div>
 
 <div class="field">
-
-<label for="bookingStatus">
-Booking Status *
-</label>
-
+<label for="bookingStatus">Booking Status *</label>
 <select id="bookingStatus" required>
-
 <option value="">Select status</option>
 <option>Pending</option>
 <option>Confirmed</option>
 <option>Cancelled</option>
-
 </select>
-
 </div>
 
 <div class="field">
-
-<label for="confirmedBy">
-Confirmed By
-</label>
-
-<input
-id="confirmedBy"
-type="text"
-placeholder="Name of person who confirmed">
-
+<label for="confirmedBy">Confirmed By</label>
+<input id="confirmedBy" type="text" placeholder="Name of person who confirmed">
 </div>
 
 <div class="field">
-
-<label for="confirmationDate">
-Confirmation Date
-</label>
-
-<input
-id="confirmationDate"
-type="date">
-
+<label for="confirmationDate">Confirmation Date</label>
+<input id="confirmationDate" type="date">
 </div>
 
 <div class="field">
-
-<label for="confirmationNotes">
-Notes
-</label>
-
-<input
-id="confirmationNotes"
-type="text"
-placeholder="Optional notes">
-
+<label for="confirmationNotes">Notes</label>
+<input id="confirmationNotes" type="text" placeholder="Optional notes">
+</div>
 </div>
 
-</div>
-
-<button
-class="btn submit-btn"
-type="submit">
-
-✅ Save Booking Confirmation
-
-</button>
-
+<button class="btn submit-btn" type="submit">✅ Save Selected Customer Confirmation</button>
 </form>
 
 <div class="confirmation-result" id="confirmationResult">
-
 <table>
-
-<tr>
-<th>Customer Name</th>
-<td id="savedCustomer">-</td>
-</tr>
-
-<tr>
-<th>Booking Details</th>
-<td id="savedDetails">-</td>
-</tr>
-
-<tr>
-<th>Status</th>
-<td id="savedStatus">-</td>
-</tr>
-
-<tr>
-<th>Confirmed By</th>
-<td id="savedBy">-</td>
-</tr>
-
-<tr>
-<th>Confirmation Date</th>
-<td id="savedDate">-</td>
-</tr>
-
-<tr>
-<th>Notes</th>
-<td id="savedNotes">-</td>
-</tr>
-
+<tr><th>Booking ID</th><td id="savedBookingId">-</td></tr>
+<tr><th>Customer Name</th><td id="savedCustomer">-</td></tr>
+<tr><th>Booking Details</th><td id="savedDetails">-</td></tr>
+<tr><th>Status</th><td id="savedStatus">-</td></tr>
+<tr><th>Confirmed By</th><td id="savedBy">-</td></tr>
+<tr><th>Confirmation Date</th><td id="savedDate">-</td></tr>
+<tr><th>Notes</th><td id="savedNotes">-</td></tr>
 </table>
-
 </div>
 
 </div>
@@ -2719,167 +2699,195 @@ document
 });
 
 
-/* BOOKING FORM */
+/* CUSTOMER BOOKING STORAGE */
+const bookingForm = document.getElementById("bookingForm");
 
-document
-.getElementById("bookingForm")
-.addEventListener("submit",function(){
-
-    showToast(
-        "Customer booking is being sent by email."
-    );
-
-});
-
-
-/* CONFIRMATION SYSTEM */
-
-const confirmationForm =
-document.getElementById("confirmationForm");
-
-confirmationForm.addEventListener("submit",function(event){
-
-    event.preventDefault();
-
-    const customer =
-    document.getElementById("confirmCustomer")
-    .value.trim();
-
-    const details =
-    document.getElementById("bookingDetails")
-    .value.trim();
-
-    const status =
-    document.getElementById("bookingStatus")
-    .value;
-
-    const confirmedBy =
-    document.getElementById("confirmedBy")
-    .value.trim();
-
-    const confirmationDate =
-    document.getElementById("confirmationDate")
-    .value;
-
-    const notes =
-    document.getElementById("confirmationNotes")
-    .value.trim();
-
-    if(!customer || !details || !status){
-
-        showToast(
-            "Please enter customer, booking details and status."
-        );
-
-        return;
-    }
-
-    if(
-        status === "Confirmed" &&
-        !confirmedBy
-    ){
-
-        showToast(
-            "Please enter who confirmed the booking."
-        );
-
-        return;
-    }
-
-    const bookingData = {
-
-        customer: customer,
-
-        details: details,
-
-        status: status,
-
-        confirmedBy:
-        confirmedBy || "Not confirmed",
-
-        confirmationDate:
-        confirmationDate || "Not entered",
-
-        notes:
-        notes || "No notes"
-
+bookingForm.addEventListener("submit",function(){
+    const booking = {
+        id: "KRH-" + Date.now().toString().slice(-8),
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        destination: document.getElementById("destinationSelect").value,
+        travelDate: document.getElementById("travelDate").value,
+        travellers: document.getElementById("travellers").value,
+        message: document.getElementById("message").value.trim(),
+        status: "Pending",
+        confirmedBy: "",
+        confirmationDate: "",
+        notes: ""
     };
 
-    /* SAVE IN THIS BROWSER */
+    let bookings = getCustomerBookings();
+    bookings.push(booking);
+    saveCustomerBookings(bookings);
+    showToast("Customer booking saved and is being sent by email.");
 
-    localStorage.setItem(
-        "kapoorLastBooking",
-        JSON.stringify(bookingData)
-    );
-
-    showSavedConfirmation(bookingData);
-
-    showToast(
-        "Booking confirmation saved."
-    );
-
+    if(sessionStorage.getItem("kapoorOwnerUnlocked") === "true"){
+        refreshCustomerList();
+    }
 });
 
 
-/* SHOW SAVED CONFIRMATION */
-
-function showSavedConfirmation(data){
-
-    document
-    .getElementById("savedCustomer")
-    .textContent = data.customer;
-
-    document
-    .getElementById("savedDetails")
-    .textContent = data.details;
-
-    document
-    .getElementById("savedStatus")
-    .textContent = data.status;
-
-    document
-    .getElementById("savedBy")
-    .textContent = data.confirmedBy;
-
-    document
-    .getElementById("savedDate")
-    .textContent = data.confirmationDate;
-
-    document
-    .getElementById("savedNotes")
-    .textContent = data.notes;
-
-    document
-    .getElementById("confirmationResult")
-    .classList.add("show");
-
+/* CUSTOMER BOOKING DATABASE - BROWSER STORAGE */
+function getCustomerBookings(){
+    try{
+        return JSON.parse(localStorage.getItem("kapoorCustomerBookings") || "[]");
+    }catch(error){
+        return [];
+    }
 }
 
+function saveCustomerBookings(bookings){
+    localStorage.setItem("kapoorCustomerBookings",JSON.stringify(bookings));
+}
 
-/* LOAD LAST SAVED BOOKING */
+/* OWNER EDITING ACCESS */
+const AUTHORIZED_OWNER_EMAIL = "pankajkapoor@kapoorroutesholiday.com";
+const ownerLock = document.getElementById("ownerLock");
+const ownerMessage = document.getElementById("ownerMessage");
+const managementPanel = document.getElementById("managementPanel");
 
-const savedBooking =
-localStorage.getItem("kapoorLastBooking");
+function unlockOwner(){
+    const email = document.getElementById("ownerEmail").value.trim().toLowerCase();
 
-if(savedBooking){
+    if(email === AUTHORIZED_OWNER_EMAIL.toLowerCase()){
+        sessionStorage.setItem("kapoorOwnerUnlocked","true");
+        ownerLock.style.display = "none";
+        managementPanel.classList.add("unlocked");
+        refreshCustomerList();
+        showToast("Owner editing access unlocked.");
+    }else{
+        ownerMessage.textContent = "Access denied. Only the authorised owner email can edit booking confirmations.";
+        ownerMessage.style.display = "block";
+    }
+}
 
-    try{
+document.getElementById("ownerLoginBtn").addEventListener("click",unlockOwner);
+document.getElementById("ownerEmail").addEventListener("keydown",function(event){
+    if(event.key === "Enter") unlockOwner();
+});
 
-        const data =
-        JSON.parse(savedBooking);
+if(sessionStorage.getItem("kapoorOwnerUnlocked") === "true"){
+    ownerLock.style.display = "none";
+    managementPanel.classList.add("unlocked");
+}
 
-        showSavedConfirmation(data);
+/* CUSTOMER LIST */
+function refreshCustomerList(){
+    const select = document.getElementById("selectCustomer");
+    const bookings = getCustomerBookings();
+    const count = document.getElementById("bookingCount");
+    const noBookings = document.getElementById("noBookings");
 
-    }catch(error){
+    select.innerHTML = '<option value="">Select a customer booking</option>';
 
-        console.log(
-            "Saved booking could not be loaded."
-        );
+    count.textContent = bookings.length + (bookings.length === 1 ? " customer booking" : " customer bookings") + " saved on this device.";
+    noBookings.style.display = bookings.length ? "none" : "block";
 
+    bookings.forEach(function(booking,index){
+        const option = document.createElement("option");
+        option.value = index;
+        option.textContent = booking.id + " — " + booking.name + " — " + (booking.destination || "No destination") + " — " + (booking.status || "Pending");
+        select.appendChild(option);
+    });
+}
+
+document.getElementById("selectCustomer").addEventListener("change",function(){
+    const index = this.value;
+    const bookings = getCustomerBookings();
+
+    if(index === "" || !bookings[index]){
+        document.getElementById("selectedBookingCard").style.display = "none";
+        document.getElementById("confirmCustomer").value = "";
+        document.getElementById("bookingDetails").value = "";
+        return;
     }
 
+    const booking = bookings[index];
+    document.getElementById("selectedBookingCard").style.display = "block";
+    document.getElementById("selectedBookingId").textContent = booking.id || "-";
+    document.getElementById("selectedCustomerInfo").textContent = booking.name || "-";
+    document.getElementById("selectedEmailInfo").textContent = booking.email || "-";
+    document.getElementById("selectedPhoneInfo").textContent = booking.phone || "-";
+    document.getElementById("selectedDestinationInfo").textContent = booking.destination || "-";
+    document.getElementById("selectedTravelDateInfo").textContent = booking.travelDate || "-";
+    document.getElementById("selectedTravellersInfo").textContent = booking.travellers || "-";
+    document.getElementById("selectedMessageInfo").textContent = booking.message || "-";
+
+    document.getElementById("confirmCustomer").value = booking.name || "";
+    document.getElementById("bookingDetails").value = booking.message || ((booking.destination || "Travel") + " booking");
+    document.getElementById("bookingStatus").value = booking.status || "Pending";
+    document.getElementById("confirmedBy").value = booking.confirmedBy || "";
+    document.getElementById("confirmationDate").value = booking.confirmationDate || today;
+    document.getElementById("confirmationNotes").value = booking.notes || "";
+
+    if(booking.status || booking.confirmedBy){
+        showSavedConfirmation(booking);
+    }else{
+        document.getElementById("confirmationResult").classList.remove("show");
+    }
+});
+
+/* SAVE ONLY THE SELECTED CUSTOMER */
+const confirmationForm = document.getElementById("confirmationForm");
+confirmationForm.addEventListener("submit",function(event){
+    event.preventDefault();
+
+    if(sessionStorage.getItem("kapoorOwnerUnlocked") !== "true"){
+        showToast("Please unlock owner editing access first.");
+        return;
+    }
+
+    const selectedIndex = document.getElementById("selectCustomer").value;
+    const bookings = getCustomerBookings();
+
+    if(selectedIndex === "" || !bookings[selectedIndex]){
+        showToast("Please select one customer first.");
+        return;
+    }
+
+    const status = document.getElementById("bookingStatus").value;
+    const confirmedBy = document.getElementById("confirmedBy").value.trim();
+
+    if(!status){
+        showToast("Please select a booking status.");
+        return;
+    }
+
+    if(status === "Confirmed" && !confirmedBy){
+        showToast("Please enter who confirmed the booking.");
+        return;
+    }
+
+    const booking = bookings[selectedIndex];
+    booking.status = status;
+    booking.confirmedBy = confirmedBy || "Not confirmed";
+    booking.confirmationDate = document.getElementById("confirmationDate").value || today;
+    booking.notes = document.getElementById("confirmationNotes").value.trim() || "No notes";
+
+    saveCustomerBookings(bookings);
+    showSavedConfirmation(booking);
+    refreshCustomerList();
+    document.getElementById("selectCustomer").value = selectedIndex;
+
+    showToast("Selected customer booking confirmation saved.");
+});
+
+function showSavedConfirmation(data){
+    document.getElementById("savedBookingId").textContent = data.id || "-";
+    document.getElementById("savedCustomer").textContent = data.name || data.customer || "-";
+    document.getElementById("savedDetails").textContent = data.message || data.details || "-";
+    document.getElementById("savedStatus").textContent = data.status || "-";
+    document.getElementById("savedBy").textContent = data.confirmedBy || "Not confirmed";
+    document.getElementById("savedDate").textContent = data.confirmationDate || "Not entered";
+    document.getElementById("savedNotes").textContent = data.notes || "No notes";
+    document.getElementById("confirmationResult").classList.add("show");
 }
 
+if(sessionStorage.getItem("kapoorOwnerUnlocked") === "true"){
+    refreshCustomerList();
+}
 
 /* FAQ */
 
@@ -2912,4 +2920,4 @@ document
 
 </body>
 </html>
-```
+
