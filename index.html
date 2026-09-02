@@ -1893,12 +1893,12 @@ Customer bookings submitted through the booking form on this browser will appear
 <div class="confirmation-grid">
 <div class="field">
 <label for="confirmCustomer">Customer Name *</label>
-<input id="confirmCustomer" type="text" readonly required>
+<input id="confirmCustomer" type="text" placeholder="Customer name" required>
 </div>
 
 <div class="field">
 <label for="bookingDetails">Booking Details *</label>
-<input id="bookingDetails" type="text" readonly required>
+<input id="bookingDetails" type="text" placeholder="Booking details" required>
 </div>
 
 <div class="field">
@@ -2816,7 +2816,7 @@ document.getElementById("selectCustomer").addEventListener("change",function(){
     document.getElementById("selectedMessageInfo").textContent = booking.message || "-";
 
     document.getElementById("confirmCustomer").value = booking.name || "";
-    document.getElementById("bookingDetails").value = booking.message || ((booking.destination || "Travel") + " booking");
+    document.getElementById("bookingDetails").value = booking.message || ((booking.destination || "Travel") + (booking.travelDate ? " | Travel Date: " + booking.travelDate : "") + (booking.travellers ? " | Travellers: " + booking.travellers : ""));
     document.getElementById("bookingStatus").value = booking.status || "Pending";
     document.getElementById("confirmedBy").value = booking.confirmedBy || "";
     document.getElementById("confirmationDate").value = booking.confirmationDate || today;
@@ -2861,6 +2861,16 @@ confirmationForm.addEventListener("submit",function(event){
     }
 
     const booking = bookings[selectedIndex];
+    const customerName = document.getElementById("confirmCustomer").value.trim();
+    const bookingDetails = document.getElementById("bookingDetails").value.trim();
+
+    if(!customerName || !bookingDetails){
+        showToast("Please enter Customer Name and Booking Details.");
+        return;
+    }
+
+    booking.name = customerName;
+    booking.message = bookingDetails;
     booking.status = status;
     booking.confirmedBy = confirmedBy || "Not confirmed";
     booking.confirmationDate = document.getElementById("confirmationDate").value || today;
